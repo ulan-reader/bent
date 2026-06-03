@@ -1,6 +1,9 @@
 bent-bot/target
 bent-service/target
 
+bent-bot/.env
+bent-service/.env
+bent-frontend/.env
 
 # Logs
 bent-frontend/logs
