@@ -1,0 +1,28 @@
+bent-bot/target
+bent-service/target
+
+
+# Logs
+bent-frontend/logs
+bent-frontend/*.log
+bent-frontend/npm-debug.log*
+bent-frontend/yarn-debug.log*
+bent-frontend/yarn-error.log*
+bent-frontend/pnpm-debug.log*
+bent-frontend/lerna-debug.log*
+
+bent-frontend/node_modules
+bent-frontend/dist
+bent-frontend/dist-ssr
+bent-frontend/*.local
+
+# Editor directories and files
+bent-frontend/.vscode
+bent-frontend/!.vscode/extensions.json
+bent-frontend/.idea
+bent-frontend/.DS_Store
+bent-frontend/*.suo
+bent-frontend/*.ntvs*
+bent-frontend/*.njsproj
+bent-frontend/*.sln
+bent-frontend/*.sw?

@@ -1,0 +1,15 @@
+[package]
+name = "bent-bot"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.102"
+dotenvy = "0.15.7"
+log = "0.4.31"
+pretty_env_logger = "0.5.0"
+reqwest = { version = "0.13.4", features = ["json"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.150"
+teloxide = { version = "0.17.0", features = ["macros"] }
+tokio = { version = "1.52.3", features = ["macros", "rt-multi-thread"] }
