@@ -1,8 +1,10 @@
 bent-bot/target
 bent-service/target
+bent-monolit/target
 
 bent-bot/.env
 bent-service/.env
+bent-monolit/.env
 bent-frontend/.env
 
 # Logs

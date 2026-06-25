@@ -1,0 +1,30 @@
+[package]
+name = "bent-monolit"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.102"
+dotenvy = "0.15.7"
+log = "0.4.31"
+pretty_env_logger = "0.5.0"
+reqwest = { version = "0.13.4", features = ["json"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.150"
+teloxide = { version = "0.17.0", features = ["macros"] }
+tokio = { version = "1.52.3", features = ["full", "macros", "rt-multi-thread"] }
+axum = "0.8.9"
+chrono = { version = "0.4.44", features = ["serde"]}
+http = "1.4.1"
+rand = "0.10.1"
+sqlx = { version = "0.9.0", features = ["postgres", "runtime-tokio", "tls-rustls", "chrono"] }
+thiserror = "2.0.18"
+tower-http = { version = "0.7.0", features = ["cors"] }
+uuid = { version = "1.23.4", features = ["v4"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+jsonwebtoken = { version = "10.4.0", features = ["rust_crypto"] }
+argon2 = { version = "0.5.3", features = ["password-hash", "rand"] }
+sha2 = "0.11.0"
+base64 = "0.22.1"
+hex = "0.4.3"

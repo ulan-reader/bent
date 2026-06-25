@@ -174,7 +174,7 @@ async fn generate_token(
     let token = service.generate(req.telegram_user_id).await?;
 
     Ok(Json(GenerateTokenResponse {
-        url: format!("http://localhost:5173/form?token={}", token),
+        url: format!("http://bent-control.kz/form?token={}", token),
         token,
     }))
 }
