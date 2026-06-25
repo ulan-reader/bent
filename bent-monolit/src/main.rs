@@ -9,6 +9,7 @@ use tower_http::cors::{Any, CorsLayer};
 mod auth;
 mod error;
 mod extractors;
+mod middleware;
 // твой существующий token-сервис (TokenService из исходного main.rs) можно
 // подключить без переписывания — просто добавь его как поле в AppState:
 //   pub tokens: TokenService,

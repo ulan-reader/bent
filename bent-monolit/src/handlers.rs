@@ -216,7 +216,7 @@ pub async fn inspector_auth(
     Json(req): Json<InspectorAuthRequest>,
 ) -> Result<Json<AuthResponse>, AppError> {
     let exists = sqlx::query_scalar!(
-        "select exists(select 1 from inspectors where tabel_number = $1 and active = true)",
+        "select exists(select 1 from inspectors where tabel_number = $1 and is_active = true)",
         req.tabel_number
     )
     .fetch_one(&state.pool)
