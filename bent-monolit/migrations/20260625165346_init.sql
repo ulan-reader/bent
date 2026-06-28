@@ -1,5 +1,4 @@
 -- Add migration script here
--- Add migration script here
 
 -- ============================================================
 -- RBAC: users, roles, permissions, sessions (UUID-based)
@@ -9,11 +8,22 @@ create extension if not exists pgcrypto; -- для gen_random_uuid()
 
 create table users (
     id uuid primary key default gen_random_uuid(),
-    email text unique not null,
-    username text unique not null,
-    password_hash text not null,
+    email text unique,
+    username text unique,
+    tabel_number bigint unique,
+    name_ru text,
+    name_kz text,
+    password_hash text,
     is_active boolean not null default true,
-    created_at timestamptz not null default now()
+    created_at timestamptz not null default now(),
+
+    -- ровно один способ входа: либо email/пароль (обычный пользователь),
+    -- либо tabel_number (инспектор, без пароля)
+    constraint users_login_method check (
+        (email is not null and password_hash is not null and tabel_number is null)
+        or
+        (tabel_number is not null and email is null and password_hash is null)
+    )
 );
 
 create table roles (
@@ -91,15 +101,6 @@ create table categories (
     is_active boolean not null default true
 );
 
-create table inspectors (
-    id bigint generated always as identity primary key,
-    tabel_number bigint not null unique,
-    name_ru text not null,
-    name_kz text,
-    is_active boolean not null default true,
-    created_at timestamptz not null default now()
-);
-
 create table one_time_tokens (
     token text primary key,
     used boolean not null default false,
@@ -119,7 +120,7 @@ create table submissions (
     reject_reason text,
     channel text,
     telegram_user_id bigint,
-    created_by_inspector bigint references inspectors(id),
+    created_by_user uuid references users(id),
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now()
 );
@@ -154,12 +155,15 @@ create table escalations (
 
 insert into roles (id, code, name_kz, name_ru) values
   ('11111111-1111-1111-1111-111111111111', 'admin', 'Әкімші', 'Администратор'),
-  ('22222222-2222-2222-2222-222222222222', 'user',  'Қолданушы', 'Пользователь');
+  ('22222222-2222-2222-2222-222222222222', 'user',  'Қолданушы', 'Пользователь'),
+  ('33333333-3333-3333-3333-333333333333', 'inspector', 'Инспектор', 'Инспектор');
 
 insert into permissions (id, code, name_kz, name_ru) values
   ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'auth.me',         'Мені көру',       'Просмотр себя'),
   ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'auth.logout',     'Шығу',            'Выход'),
-  ('cccccccc-cccc-cccc-cccc-cccccccccccc', 'auth.logout_all', 'Барлығынан шығу', 'Выход отовсюду');
+  ('cccccccc-cccc-cccc-cccc-cccccccccccc', 'auth.logout_all', 'Барлығынан шығу', 'Выход отовсюду'),
+  ('dddddddd-dddd-dddd-dddd-dddddddddddd', 'submissions.create_as_inspector', 'Өтінім құру (инспектор)', 'Создание заявки (инспектор)'),
+  ('eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee', 'submissions.review', 'Өтінімдерді қарау', 'Рассмотрение заявок');
 
 insert into role_permissions (role_id, permission_id) values
   ('22222222-2222-2222-2222-222222222222', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'),
@@ -167,4 +171,8 @@ insert into role_permissions (role_id, permission_id) values
   ('22222222-2222-2222-2222-222222222222', 'cccccccc-cccc-cccc-cccc-cccccccccccc'),
   ('11111111-1111-1111-1111-111111111111', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'),
   ('11111111-1111-1111-1111-111111111111', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'),
-  ('11111111-1111-1111-1111-111111111111', 'cccccccc-cccc-cccc-cccc-cccccccccccc');
+  ('11111111-1111-1111-1111-111111111111', 'cccccccc-cccc-cccc-cccc-cccccccccccc'),
+  ('11111111-1111-1111-1111-111111111111', 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee'),
+  ('33333333-3333-3333-3333-333333333333', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'),
+  ('33333333-3333-3333-3333-333333333333', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'),
+  ('33333333-3333-3333-3333-333333333333', 'dddddddd-dddd-dddd-dddd-dddddddddddd');

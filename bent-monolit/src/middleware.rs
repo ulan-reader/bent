@@ -1,5 +1,5 @@
 use crate::auth::verify_access_token;
-use crate::models::Claims;
+use crate::auth::jwt::Claims;
 use axum::{
     body::Body,
     extract::State,

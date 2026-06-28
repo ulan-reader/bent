@@ -16,8 +16,9 @@ tokio = { version = "1.52.3", features = ["full", "macros", "rt-multi-thread"] }
 axum = "0.8.9"
 chrono = { version = "0.4.44", features = ["serde"]}
 http = "1.4.1"
-rand = "0.10.1"
-sqlx = { version = "0.9.0", features = ["postgres", "runtime-tokio", "tls-rustls", "chrono"] }
+rand = "0.9"
+# rand = "0.10.1"
+sqlx = { version = "0.9.0", features = ["postgres", "runtime-tokio", "tls-rustls", "chrono", "uuid"] }
 thiserror = "2.0.18"
 tower-http = { version = "0.7.0", features = ["cors"] }
 uuid = { version = "1.23.4", features = ["v4", "serde"] }

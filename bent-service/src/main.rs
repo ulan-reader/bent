@@ -3,10 +3,10 @@ use axum::{
     extract::{Path, State},
     routing::{get, post},
 };
-use chrono::{DateTime, Duration, Utc};
+use chrono::{Duration, Utc};
 use http::Method;
 use rand::RngExt;
-use rand::{Rng, distr::Alphanumeric};
+use rand::distr::Alphanumeric;
 use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use std::net::SocketAddr;
@@ -127,7 +127,7 @@ pub enum TokenError {
 
 impl axum::response::IntoResponse for TokenError {
     fn into_response(self) -> axum::response::Response {
-        use axum::{http::StatusCode, response::IntoResponse};
+        use axum::http::StatusCode;
 
         let status = match self {
             TokenError::NotFound => StatusCode::NOT_FOUND,
@@ -187,3 +187,5 @@ async fn validate_token(
 
     Ok(Json(ValidateTokenResponse { valid: true }))
 }
+
+       
